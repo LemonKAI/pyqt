@@ -207,7 +207,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_7.addWidget(self.level)
         self.verticalLayout_5.addLayout(self.verticalLayout_7)
         self.horizontalLayout.addLayout(self.verticalLayout_5)
-        self.slider = QtWidgets.QSlider(self.centralwidget)
+        # self.slider = QtWidgets.QSlider(self.centralwidget)
         # self.slider.setGeometry(QtCore.QRect(310, 800, 160, 16))
         # self.slider.setMaximum(2)
         # self.slider.setOrientation(QtCore.Qt.Horizontal)
@@ -251,16 +251,25 @@ class Ui_MainWindow(object):
         data = data_list[idx]
 
     def updateProcessBar(self, data):
-        self.plr_bar.setValue(data.plr)
-        self.acc_bar.setValue(data.acc)
-        self.latency_bar.setValue(data.latency)
+
         if(data.latency > 1000):
             self.latency_bar.setFormat(str(round((data.latency/1000), 2)) + "s")
         else:
             self.latency_bar.setFormat(str(int(data.latency)) + "ms")
-        self.network_bar.setValue(data.network)
-        self.cpu_bar.setValue(data.cpu)
-        self.memory_bar.setValue(data.memory)
+
+        self.plr_bar.setValue(int(data.plr))
+        self.acc_bar.setValue(int(data.acc))
+        self.latency_bar.setValue(int(data.latency))
+        self.network_bar.setValue(int(data.network))
+        self.cpu_bar.setValue(int(data.cpu))
+        self.memory_bar.setValue(int(data.memory))
+
+        self.plr_bar.setFormat(str(int(data.plr)) + "%")
+        self.acc_bar.setFormat(str(int(data.acc)) + "%")
+        self.network_bar.setFormat(str(int(data.network)) + "%")
+        self.cpu_bar.setFormat(str(int(data.cpu)) + "%")
+        self.memory_bar.setFormat(str(int(data.memory)) + "%")
+
         self.updateLevel(data)
 
     def updateLevel(self, data):
@@ -319,9 +328,9 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     import sys
 
-    normal = Data(1, 99, 400, 34, 5, 52)
+    normal = Data(1, 98, 400, 34, 5, 52)
     ddos = Data(83, 41, 14000, 78, 76, 53)
-    firewall = Data(2, 99, 500, 37, 5, 53)
+    firewall = Data(2, 98, 500, 37, 5, 53)
     data_list = [normal, ddos, firewall]
     data = data_list[0]
 
